@@ -1,30 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Libary App</title>
-    <link rel="stylesheet" href="Styles/reset.css">
-    <link rel="stylesheet" href="Styles/styles.css">
+    <link rel="stylesheet" href="Styles/reset.css" />
+    <link rel="stylesheet" href="Styles/styles.css" />
     <script src="script.js" defer></script>
-</head>
-<body>
+  </head>
+  <body>
     <header>
-        <h2>Library</h2>
+      <h2>Library</h2>
     </header>
     <main>
-        
-    </main>
-    <div class="addbook-container">
+      <div class="gridcontainer">
+        <div class="bookcard-container">
+          <div class="bookcard">
+            <button id="delete" type="button">x</button>
+            <div class="img-container"><img src="" alt="" /></div>
+            <div class="info">
+              <p><span class="title">Mistborn</span></p>
+              <p><span class="author">Brandon Sanderson</span></p>
+              <p>Pages: <span class="pages">550</span></p>
+              <div class="read-section">
+                <p>Read: <span class="read">Reading Now</span></p>
+                <button id="read" type="input">Change</button>
+              </div>
+            </div>
+            <span class="edit">Edit</span>
+          </div>
+        </div>
+      </div>
+      <div class="addbook-container">
         <button class="addbook">Add</button>
-    </div>
-    <div class="cancel-layer">
-        <div class="popup"></div>
-    </div>
+      </div>
+    </main>
+
     <footer>
-        <h4>Created by Alvin</h4>
+      <h4>Created by Alvin</h4>
     </footer>
-    
-</body>
+    <div class="cancel-layer">
+      <div class="create-popup">
+        <button id="cancel">x</button>
+        <label for="title">Title</label
+        ><input type="text" id="title" required />
+        <label for="author">Author</label
+        ><input type="text" id="author" required />
+        <label for="pages">Pages</label
+        ><input type="number" id="title" required />
+        <fieldset>
+          <legend>Have you read this book?</legend>
+          <input type="radio" id="yes" value="yes" />
+          <input type="radio" id="no" value="no" />
+          <input type="radio" id="still-reading" value="still-reading" />
+        </fieldset>
+
+        <label for="file">Click if you want to upload a picture of the cover</label>
+        <input type="file" id="file" />
+        <button id="create" type="button">Create</button>
+      </div>
+    </div>
+    <div class="delete-cancel-layer">
+      <div class="delete-popup">
+        <h1>Delete</h1>
+        <p>Are you sure you want to remove from library?</p>
+        <div class="delete-buttonContainer">
+          <button id="yes" value="yes" type="button">Yes</button>
+          <button id="no" value="no" type="button">No</button>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
