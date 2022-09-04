@@ -22,12 +22,12 @@ In this app, you can record information about books you read. You can store info
 
 ## Psuedo Code
 
-- A button that makes form appear
+- ~~A button that makes form appear~~
     - Call openCreatePopup
         - Make Create Popup appear
-- Gather title, author, pages, and read status on the form
+- ~~Gather title, author, pages, and read status on the form~~
     - Create form and label for each thing
-- User can attach picture to card.
+- ~~User can attach picture to card.~~
     - Create a form and label
 - If a picture is not upload, a preloaded picture will be used
     - Call uploadPicture

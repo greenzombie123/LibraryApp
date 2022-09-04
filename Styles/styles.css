@@ -80,6 +80,7 @@ footer {
   background-color: rgba(45, 45, 45, 0.255);
   justify-content: center;
   align-items: center;
+  padding-bottom: 200px;
 }
 
 .create-popup {
@@ -124,6 +125,10 @@ fieldset input[type="radio"]{
   border: 1px solid rgb(175, 175, 175);
   box-shadow: 2px 2px 1px black;
   position: relative;
+}
+
+fieldset input[type="radio"]:checked{
+  background-color: rgb(233, 255, 90);
 }
 
 fieldset input[id="yes"]::after{
@@ -173,6 +178,54 @@ button[id="create"]{
   padding: 0.5rem 1rem;
   border-radius: 10px;
   align-self: center;
+}
+
+/*Popup - Validation*/
+
+.val-title, .val-author, .val-pages, .val-read{
+  position: relative;
+}
+
+.hidden{
+  display: none;
+}
+
+
+.val-title::after{
+  content:"Please enter a title";
+  position: absolute;
+  font-size: 1rem;
+  top:-22px;
+  left: 100px;
+  color: red;
+}
+
+.val-author::after{
+  content:"Please enter the name of author";
+  position: absolute;
+  font-size: 1rem;
+  top:-22px;
+  left: 100px;
+  color: red;
+}
+
+.val-pages::after{
+  content:"Please enter number of pages";
+  position: absolute;
+  font-size: 1rem;
+  top:-22px;
+  left: 100px;
+  color: red;
+}
+
+.val-read::after{
+  content:"Please enter your status on the book";
+  position: absolute;
+  font-size: 1rem;
+  top:-22px;
+  left: 250px;
+  color: red;
+  width: 120px;
 }
 
 /*Grid Container*/
@@ -238,7 +291,7 @@ button[id="create"]{
 
 .read-section {
   display: flex;
-  justify-content: space-between;
+  align-items: center;
 }
 
 .title {
@@ -250,7 +303,7 @@ button[id="create"]{
 #read {
   appearance: none;
   border: 1px solid black;
-  margin-right: 16%;
+  margin-left: 5%;
 }
 
 #edit{
@@ -261,7 +314,7 @@ button[id="create"]{
 .edit{
   color: rgb(55, 191, 254);
   font-family: var(--roboto);
-  align-self: flex-start;
+  align-self: flex-end;
 }
 
 /*Delete Pop Up*/

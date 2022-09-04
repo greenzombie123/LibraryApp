@@ -22,10 +22,10 @@
             <div class="info">
               <p><span class="title">Mistborn</span></p>
               <p><span class="author">Brandon Sanderson</span></p>
-              <p>Pages: <span class="pages">550</span></p>
+              <p><span class="pages">550 pages</span></p>
               <div class="read-section">
-                <p>Read: <span class="read">Reading Now</span></p>
-                <button id="read" type="input">Change</button>
+                <p><span class="read">Reading Now</span></p>
+                <button id="read" type="button">Change</button>
               </div>
             </div>
             <span class="edit">Edit</span>
@@ -33,7 +33,7 @@
         </div>
       </div>
       <div class="addbook-container">
-        <button class="addbook">Add</button>
+        <button class="addbook" type="button">Add</button>
       </div>
     </main>
 
@@ -43,20 +43,30 @@
     <div class="cancel-layer">
       <div class="create-popup">
         <button id="cancel">x</button>
-        <label for="title">Title</label
-        ><input type="text" id="title" required />
-        <label for="author">Author</label
-        ><input type="text" id="author" required />
-        <label for="pages">Pages</label
-        ><input type="number" id="title" required />
+        <label for="title">Title</label>
+        <span class="val-title hidden"></span><input type="text" id="title" required />
+        <label for="author">Author</label>
+        <span class="val-author hidden"></span>
+        <input type="text" id="author" required />
+        <label for="pages">Pages</label>
+        <span class="val-pages hidden"></span
+        ><input type="number" id="pages" required />
         <fieldset>
-          <legend>Have you read this book?</legend>
-          <input type="radio" id="yes" value="yes" />
-          <input type="radio" id="no" value="no" />
-          <input type="radio" id="still-reading" value="still-reading" />
+          <legend>Have you read this book?</legend> <span class="val-read hidden"></span
+            >
+          <input type="radio" id="yes" value="Read" name="read" />
+          <input type="radio" id="no" value="Not Read" name="read" />
+          <input
+            type="radio"
+            id="still-reading"
+            value="Reading Now"
+            name="read"
+          />
         </fieldset>
 
-        <label for="file">Click if you want to upload a picture of the cover</label>
+        <label for="file"
+          >Click if you want to upload a picture of the cover</label
+        >
         <input type="file" id="file" />
         <button id="create" type="button">Create</button>
       </div>
