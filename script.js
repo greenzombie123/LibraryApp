@@ -428,7 +428,9 @@ function customValidation() {
 
 const CustomValidation = new customValidation();
 
-const entries = [];
-for (let index = 0; index < 20; index++) {
-  entries.push(new Book('My Grandmother Asked Me to Tell You She’s Sorry', 'author', 12, "Read"))
-}
+// const entries = [];
+// for (let index = 0; index < 20; index++) {
+//   entries.push(new Book('My Grandmother Asked Me to Tell You She’s Sorry', 'author', 12, "Read"))
+// }
+
+const firstBook = new Book('A Title To Beat All Titles', 'Mr. Author', 192, "Read")
