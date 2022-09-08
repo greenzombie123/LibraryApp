@@ -7,6 +7,10 @@
     <title>Libary App</title>
     <link rel="stylesheet" href="Styles/reset.css" />
     <link rel="stylesheet" href="Styles/styles.css" />
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png" />
+    <link rel="manifest" href="favicon/site.webmanifest" />
     <script src="script.js" defer></script>
   </head>
   <body>
@@ -15,7 +19,7 @@
     </header>
     <main>
       <div class="gridcontainer">
-        <div class="bookcard-container">
+        <!-- <div class="bookcard-container">
           <div class="bookcard">
             <button id="delete" type="button">x</button>
             <div class="img-container"><img src="" alt="" /></div>
@@ -30,11 +34,12 @@
             </div>
             <span class="edit">Edit</span>
           </div>
-        </div>
+        </div> -->
       </div>
       <div class="addbook-container">
         <button class="addbook" type="button">Add</button>
       </div>
+      <div class="buffer"></div>
     </main>
 
     <footer>
@@ -44,7 +49,8 @@
       <div class="create-popup">
         <button id="cancel">x</button>
         <label for="title">Title</label>
-        <span class="val-title hidden"></span><input type="text" id="title" required />
+        <span class="val-title hidden"></span
+        ><input type="text" id="title" required />
         <label for="author">Author</label>
         <span class="val-author hidden"></span>
         <input type="text" id="author" required />
@@ -52,8 +58,8 @@
         <span class="val-pages hidden"></span
         ><input type="number" id="pages" required />
         <fieldset>
-          <legend>Have you read this book?</legend> <span class="val-read hidden"></span
-            >
+          <legend>Have you read this book?</legend>
+          <span class="hidden"></span>
           <input type="radio" id="yes" value="Read" name="read" />
           <input type="radio" id="no" value="Not Read" name="read" />
           <input

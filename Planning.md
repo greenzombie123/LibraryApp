@@ -79,5 +79,17 @@ openDeletePopUp
 
 deleteBookEntry
 
+.addbook-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* padding: 20px 0; */
+    position: fixed;
+    bottom: 4%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* margin: 0 90px; */
+}
+
 removeBookEntry
- 
+ image.png

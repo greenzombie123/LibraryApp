@@ -1,16 +1,9 @@
-const job = {k:12,dosomething:function(){console.log(this)}}
-
-function doThings(callback){
-    callback();
+function doCodeStuff(){
+  this.doThings = function(){
+    console.log('Wow')
+  }
 }
 
-const eggs = {
-    k:3,
-    doThings:function(callback){
-        callback();
-    }
-}
+const o = new doCodeStuff()
 
-job.dosomething()
-
-eggs.doThings(job.dosomething.bind(eggs))
+o.doThings()

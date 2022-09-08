@@ -1,50 +1,70 @@
 /*Make create pop up appear*/
 
 const addButton = document.querySelector(".addbook");
-addButton.addEventListener("click", (e) => {
+
+addButton.addEventListener("click", openCreatePopUp, false);
+
+function openCreatePopUp() {
   const cancelLayer = document.querySelector(".cancel-layer");
   cancelLayer.setAttribute("style", "display:flex");
-});
+}
 
-/* Remove popup when click outside of it */
+// New Remove Popup Functionality
+
 const cancelLayer = document.querySelector(".cancel-layer");
+const cancelButton = document.querySelector(".create-popup #cancel");
 
-cancelLayer.addEventListener("click", cancelPopUp, false);
+cancelLayer.addEventListener("click", removePopUp, false);
+cancelButton.addEventListener("click", removePopUp, false);
 
-function cancelPopUp(e) {
-  if (e.target === cancelLayer) {
-    const create_popup = e.target.children[0];
-    create_popup.querySelector('input[id="title"]').value = "";
-    create_popup.querySelector('input[id="author"]').value = "";
-    create_popup.querySelector('input[id="pages"]').value = "";
-    create_popup.querySelector('input[id="yes"]').checked = false;
-    create_popup.querySelector('input[id="no"]').checked = false;
-    create_popup.querySelector('input[id="still-reading"]').checked = false;
-    create_popup.querySelector('input[id="file"]').files[0] = "";
+function removePopUp(e) {
+  if (
+    e.target.matches(".cancel-layer") ||
+    e.target.matches(".create-popup #cancel")
+  ) {
+    const createPopup = document.querySelector(".create-popup");
+    const cancelLayer = createPopup.parentElement;
 
-    e.target.setAttribute("style", "display:none");
+    createPopup.querySelector('input[id="title"]').value = "";
+    createPopup.querySelector('input[id="author"]').value = "";
+    createPopup.querySelector('input[id="pages"]').value = "";
+    createPopup.querySelector('input[id="yes"]').checked = false;
+    createPopup.querySelector('input[id="no"]').checked = false;
+    createPopup.querySelector('input[id="still-reading"]').checked = false;
+    createPopup.querySelector('input[id="file"]').value = "";
+
+    cancelLayer.setAttribute("style", "display:none");
+    setButton.changeButtonToCreate();
+    CustomValidation.resetValidation();
   }
 }
 
-/* Remove popup when click cancel button */
-const cancelButton = document.querySelector(".create-popup #cancel");
-cancelButton.addEventListener("click", cancelPopUpWithButton, false);
+// Change Popup Button from Create to Edit and vice versa
 
-function cancelPopUpWithButton(e) {
-  const create_popup = e.target.parentElement;
+function SetButton() {
+  this.button = document.querySelector("#create");
+  this.isEditOn = false;
 
-  create_popup.querySelector('input[id="title"]').value = "";
-  create_popup.querySelector('input[id="author"]').value = "";
-  create_popup.querySelector('input[id="pages"]').value = "";
-  create_popup.querySelector('input[id="yes"]').checked = false;
-  create_popup.querySelector('input[id="no"]').checked = false;
-  create_popup.querySelector('input[id="still-reading"]').checked = false;
-  create_popup.querySelector('input[id="file"]').files[0] = "";
+  this.changeButtonToEdit = function () {
+    if (!this.isEditOn) {
+      this.button.removeEventListener("click", createBookEntry, false);
+      this.button.addEventListener("click", edit.editBookCard, false);
+      this.button.textContent = "Edit";
+      this.isEditOn = true;
+    }
+  };
 
-  create_popup.parentElement.setAttribute("style", "display:none");
+  this.changeButtonToCreate = function () {
+    if (this.isEditOn) {
+      this.button.removeEventListener("click", edit.editBookCard, false);
+      this.button.addEventListener("click", createBookEntry, false);
+      this.button.textContent = "Create";
+      this.isEditOn = false;
+    }
+  };
 }
 
-/* Delete Pop Up Object and Functionality */
+const setButton = new SetButton();
 
 const deletemodal = {
   deletePopUp: document.querySelector(".delete-popup"),
@@ -105,7 +125,7 @@ function Book(title, author, pages, read, file) {
   this.author = author;
   this.pages = pages;
   this.read = read;
-  this.file = file || "/Assets/bookimage.jpg";
+  this.file = file;
   this.element = renderBookCard(this);
 }
 
@@ -117,11 +137,17 @@ const createButton = document.querySelector("#create");
 createButton.addEventListener("click", createBookEntry, false);
 
 function createBookEntry() {
+  if (!CustomValidation.checkValidation()) {
+    return;
+  }
+
   const createPopup = document.querySelector(".create-popup");
   const title = createPopup.querySelector('input[id="title"]').value;
   const author = createPopup.querySelector('input[id="author"]').value;
   const pages = createPopup.querySelector('input[id="pages"]').value;
-  const read = createPopup.querySelector('input[name="read"]').value;
+  const read = createPopup.querySelector("input:checked")
+    ? createPopup.querySelector("input:checked").value
+    : "Not Read";
   const file = createPopup.querySelector('input[id="file"]').files[0];
 
   const book = new Book(title, author, pages, read, file);
@@ -133,7 +159,7 @@ function createBookEntry() {
   createPopup.querySelector('input[id="yes"]').checked = false;
   createPopup.querySelector('input[id="no"]').checked = false;
   createPopup.querySelector('input[id="still-reading"]').checked = false;
-  createPopup.querySelector('input[id="file"]').files[0] = "";
+  createPopup.querySelector('input[id="file"]').value = "";
 
   createPopup.parentElement.setAttribute("style", "display:none");
 }
@@ -161,6 +187,12 @@ function renderBookCard(book) {
 
   const img = document.createElement("img");
   img_container.appendChild(img);
+  if (!book.file) {
+    img.src = "Assets/bookimage.jpg";
+  } else {
+    img.src = URL.createObjectURL(book.file);
+    img.onload = () => URL.revokeObjectURL(this.src);
+  }
 
   const info = document.createElement("div");
   Object.assign(info, {
@@ -220,14 +252,15 @@ function renderBookCard(book) {
     type: "button",
     textContent: "Change",
   });
-  changebutton.addEventListener('click', ()=>changeReadStatus(book), false)
+  changebutton.addEventListener("click", () => changeReadStatus(book), false);
   read_section.appendChild(changebutton);
 
   const editbutton = document.createElement("span");
   Object.assign(editbutton, {
     className: "edit",
-    textContent:'Edit'
+    textContent: "Edit",
   });
+  editbutton.addEventListener("click", () => edit.openPopup(book), false);
   bookcard.appendChild(editbutton);
 
   const gridcontainer = document.querySelector(".gridcontainer");
@@ -263,4 +296,139 @@ function changeReadStatus(book) {
   }
 }
 
+// Edit Constructor and Functionality
+
+function Edit() {
+  let bookitem = null;
+
+  const createPopup = document.querySelector(".create-popup");
+  const cancelLayer = document.querySelector(".cancel-layer");
+  const title = createPopup.querySelector('input[id="title"]');
+  const author = createPopup.querySelector('input[id="author"]');
+  const pages = createPopup.querySelector('input[id="pages"]');
+  const readbuttons = createPopup.querySelectorAll('input[name="read"]');
+  const file = createPopup.querySelector('input[id="file"]');
+
+  this.openPopup = (book) => {
+    bookitem = book;
+
+    cancelLayer.setAttribute("style", "display:flex");
+
+    title.value = bookitem.title;
+    author.value = bookitem.author;
+    pages.value = bookitem.pages;
+
+    //Adding File Object to File Input if file property of Book object has a File Object
+    if (bookitem.file) {
+      const dataTransfer = new DataTransfer();
+      dataTransfer.items.add(bookitem.file);
+      file.files = dataTransfer.files;
+    }
+
+    switch (bookitem.read) {
+      case "Read":
+        readbuttons[0].checked = true;
+        break;
+      case "Not Read":
+        readbuttons[1].checked = true;
+        break;
+      case "Reading Now":
+        readbuttons[2].checked = true;
+        break;
+
+      default:
+        break;
+    }
+
+    setButton.changeButtonToEdit();
+  };
+
+  this.editBookCard = () => {
+    if (!CustomValidation.checkValidation()) {
+      return;
+    }
+    bookitem.title = title.value;
+    bookitem.author = author.value;
+    bookitem.pages = pages.value;
+    bookitem.read = createPopup.querySelector("input:checked").value;
+    bookitem.file = file.files[0];
+
+    bookitem.element.querySelector(".title").textContent = bookitem.title;
+    bookitem.element.querySelector(".author").textContent = bookitem.author;
+    bookitem.element.querySelector(".pages").textContent =
+      bookitem.pages + `${bookitem.pages > 1 ? " pages" : " page"}`;
+    bookitem.element.querySelector(".read").textContent = bookitem.read;
+    const img = bookitem.element.querySelector("img");
+    if (!bookitem.file) {
+      img.src = "Assets/bookimage.jpg";
+    } else {
+      img.src = URL.createObjectURL(bookitem.file);
+      img.onload = () => URL.revokeObjectURL(this.src);
+    }
+
+    cancelLayer.setAttribute("style", "display:none");
+
+    title.value = "";
+    author.value = "";
+    pages.value = "";
+    readbuttons.forEach((button) => (button.checked = false));
+    file.value = "";
+
+    setButton.changeButtonToCreate();
+  };
+}
+
+const edit = new Edit();
+
 /* Validation Constraint Functionality */
+
+function customValidation() {
+  const inputs = [];
+  const createPopup = document.querySelector(".create-popup");
+  inputs.push(createPopup.querySelector('input[id="title"]'));
+  inputs.push(createPopup.querySelector('input[id="author"]'));
+  inputs.push(createPopup.querySelector('input[id="pages"]'));
+
+  this.checkValidation = function () {
+    let IsEmpty = false;
+    for (let i = 0; i < inputs.length; i++) {
+      const span = inputs[i].previousElementSibling;
+      if (inputs[i].getAttribute("type") === "number" && inputs[i].value.startsWith('0') || inputs[i].getAttribute("type") === "number" && inputs[i].value.includes('.')) {
+        IsEmpty = true;
+        reportMissingValue(span);
+        continue;
+      }
+      if (inputs[i].validity.valueMissing) {
+        IsEmpty = true;
+        reportMissingValue(span);
+      } else clearReport(span);
+    }
+    if (IsEmpty) {
+      return false;
+    } else return true;
+  };
+
+  this.resetValidation = function () {
+    clearReports();
+  };
+
+  function clearReports() {
+    const spans = createPopup.querySelectorAll('span[class^="val-"]');
+    spans.forEach((span) => span.classList.add("hidden"));
+  }
+
+  function clearReport(span) {
+    span.classList.add("hidden");
+  }
+
+  function reportMissingValue(span) {
+    span.classList.remove("hidden");
+  }
+}
+
+const CustomValidation = new customValidation();
+
+const entries = [];
+for (let index = 0; index < 20; index++) {
+  entries.push(new Book('My Grandmother Asked Me to Tell You She’s Sorry', 'author', 12, "Read"))
+}

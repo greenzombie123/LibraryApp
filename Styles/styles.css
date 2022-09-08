@@ -53,16 +53,20 @@ main {
 }
 
 .addbook-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px 0;
+  position: fixed;
+  bottom: 3%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .addbook-container button {
   font-size: 2rem;
   padding: 0.5rem 2rem;
   border-radius: 10px;
+}
+
+.buffer{
+  height: 75px;
 }
 
 footer {
@@ -269,9 +273,10 @@ button[id="create"]{
 }
 
 .img-container {
-  width: 100%;
-  height: 45%;
+  width: 50%;
+  height: 145px;;
   border: 1px solid black;
+  flex-shrink: 0;
 }
 
 .img-container img {
@@ -297,7 +302,7 @@ button[id="create"]{
 .title {
   font-family: var(--quick);
   font-weight: 500;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
 }
 
 #read {
@@ -306,15 +311,20 @@ button[id="create"]{
   margin-left: 5%;
 }
 
-#edit{
+/* #edit{
   padding: 8px 20px;
   font-size: 1.2rem;
-}
+} */
 
 .edit{
   color: rgb(55, 191, 254);
   font-family: var(--roboto);
   align-self: flex-end;
+  cursor: pointer;
+}
+
+.edit:hover{
+  color: red;
 }
 
 /*Delete Pop Up*/
