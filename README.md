@@ -2,7 +2,7 @@
 
 This is a library app project created for the Odin Project. 
 
-![image](https://user-images.githubusercontent.com/105436283/189177287-82bdd13f-cc1f-4141-8d26-0a7e58987000.png)
+![image](https://user-images.githubusercontent.com/105436283/189177995-fabe0198-67d7-4c17-8797-6ab12cf7611d.png)
 
 ---
 
